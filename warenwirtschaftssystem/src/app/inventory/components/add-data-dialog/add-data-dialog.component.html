@@ -1,0 +1,38 @@
+<h2>Produkt Pflege</h2>
+
+<form [formGroup]="produktForm" (ngSubmit)="onSubmit()">
+    <!-- ID -->
+    <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Kunden Name</mat-label>
+        <input matInput formControlName="name" type="input" placeholder="Max Mustermann" required>
+    </mat-form-field>
+
+    <!-- Produktname -->
+    <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Regal/Fach</mat-label>
+        <input matInput formControlName="shelf" required>
+        <mat-error *ngIf="produktForm.get('produkt')?.hasError('required')">
+            Produktname ist erforderlich.
+        </mat-error>
+        <mat-error *ngIf="produktForm.get('produkt')?.hasError('maxLength')">
+            Produktname darf maximal 255 Zeichen haben.
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Anzahl -->
+    <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Bestand hinzufügen</mat-label>
+        <input matInput type="number" formControlName="qty" required>
+        <mat-error *ngIf="produktForm.get('bestand')?.hasError('required')">
+            Bestand ist erforderlich.
+        </mat-error>
+        <mat-error *ngIf="produktForm.get('bestand')?.hasError('min')">
+            Bestand muss mindestens 1 sein.
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Buttons -->
+    <button mat-raised-button color="primary" type="submit" class="form-button">Speichern</button>
+    <button mat-button (click)="router.navigate(['/produkte'])" class="form-button">Abbrechen</button>
+
+</form>

@@ -1,0 +1,19 @@
+<h1 mat-dialog-title class="dialog-title">{{ data.dialogTitle }}</h1>
+
+<div mat-dialog-content class="dialog-content" [formGroup]="form">
+    <mat-form-field appearance="fill" class="dialog-field">
+        <mat-label>{{ data.inputLabel }}</mat-label>
+        <input matInput [type]="data.inputType" formControlName="value" autocomplete="off" />
+        <mat-error *ngIf="form.get('value')?.hasError('required')">Wert ist erforderlich</mat-error>
+        <mat-error *ngIf="form.get('value')?.hasError('min')">Wert zu klein</mat-error>
+        <mat-error *ngIf="form.get('value')?.hasError('max')">Wert zu groß</mat-error>
+        <mat-error *ngIf="form.get('value')?.hasError('pattern')">Ungültiges Format</mat-error>
+    </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-button (click)="cancel()">Abbrechen</button>
+    <button mat-flat-button color="primary" (click)="save()" [disabled]="form.invalid">
+        Speichern
+    </button>
+</div>

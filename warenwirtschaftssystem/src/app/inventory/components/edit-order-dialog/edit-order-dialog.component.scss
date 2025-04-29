@@ -1,0 +1,24 @@
+/* Container nimmt gesamte Breite ein */
+:host {
+    display: block;
+}
+
+/* Formular untereinander anordnen */
+form {
+    display: flex;
+    flex-direction: column;
+    /* vertikale Stapelung */
+}
+
+/* Jedes Eingabefeld bekommt eine eigene Zeile */
+mat-form-field.form-field {
+    width: 100%;
+    /* volle Dialog-Breite */
+    margin-bottom: 1rem;
+    /* etwas Abstand nach unten */
+}
+
+/* Abstand zwischen den Actions und den Feldern */
+mat-dialog-actions {
+    margin-top: 1.5rem;
+}

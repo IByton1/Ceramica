@@ -1,0 +1,17 @@
+<mat-toolbar color="primary" class="top-nav">
+    <span>Ceramica</span>
+
+    <span class="spacer"></span>
+    <button mat-button [routerLink]="'/'" *ngIf="!isMobile">Liste</button>
+    <button mat-button [routerLink]="'/produkt-erstellen'" *ngIf="!isMobile">Auftrag hinzufügen</button>
+    <button mat-button [routerLink]="'/settings'" *ngIf="!isMobile">Einstellungen</button>
+    <button mat-icon-button [routerLink]="'/'" *ngIf="isMobile">
+        <mat-icon>home</mat-icon>
+    </button>
+    <button mat-icon-button [routerLink]="'/produkt-erstellen'" *ngIf="isMobile">
+        <mat-icon>add</mat-icon>
+    </button>
+    <button mat-icon-button [routerLink]="'settings'" *ngIf="isMobile">
+        <mat-icon>settings</mat-icon>
+    </button>
+</mat-toolbar>

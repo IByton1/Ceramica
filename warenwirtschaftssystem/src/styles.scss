@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+:root {
+    --ui-scale: 1;
+}
+
+.app-zoom-wrapper {
+    /* Chrome, Edge, Safari: */
+    zoom: var(--ui-scale);
+    /* Firefox-Fallback: */
+    -moz-transform: scale(var(--ui-scale));
+    -moz-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
