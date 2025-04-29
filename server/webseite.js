@@ -2,18 +2,17 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 9090;
+const port = process.env.PORT || 8080;
 
-// Sauberer statischer Pfad + URL-Root definieren
-const staticPath = '/home/Ceramica/warenwirtschaftssystem/dist/warenwirtschaftssystem/browser';
-app.use('/', express.static(staticPath));
+// Serve static files from the browser directory
+app.use(express.static('/root/Warenwirtschaftssystem/frontend-Automaten/dist/frontend-automaten/browser'));
 
-// Redirect alle anderen Anfragen auf index.html
+// Redirect all requests to index.html
 app.get('*', (req, res) => {
-    res.sendFile(path.join(staticPath, 'index.html'));
+    res.sendFile('/root/Warenwirtschaftssystem/frontend-Automaten/dist/frontend-automaten/browser/index.html');
 });
 
-// Server starten
+// Start the server
 app.listen(port, '0.0.0.0', () => {
-    console.log(`Server läuft auf http://0.0.0.0:${port}`);
+    console.log(`Server is running and accessible on http://0.0.0.0:${port}`);
 });
