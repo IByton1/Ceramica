@@ -78,7 +78,7 @@ export class BackendService {
 
 
   */
-  private baseUrl = 'http://localhost:4000'; // URL des Backends
+  private baseUrl = 'http://142.132.177.88:4000'; // URL des Backends
 
   constructor(private http: HttpClient) { }
 
