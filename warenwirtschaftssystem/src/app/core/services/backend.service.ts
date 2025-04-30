@@ -14,7 +14,7 @@ export interface InventoryItem {
 })
 export class BackendService {
 
-  private mockItems: InventoryItem[] = [
+  /*private mockItems: InventoryItem[] = [
     { id: 1, name: 'Kunde A', shelf: 'Regal 1', qty: 10 },
     { id: 2, name: 'Kunde B', shelf: 'Regal 2', qty: 5 },
     { id: 3, name: 'Kunde C', shelf: 'Regal 3', qty: 20 },
@@ -77,8 +77,8 @@ export class BackendService {
   }
 
 
-  /*
-  private baseUrl = 'http://localhost:3000'; // URL des Backends
+  */
+  private baseUrl = 'http://localhost:4000'; // URL des Backends
 
   constructor(private http: HttpClient) { }
 
@@ -123,6 +123,6 @@ export class BackendService {
 
   async deleteProductData(id: number): Promise<void> {
     return await firstValueFrom(this.http.delete(`${this.baseUrl}/api/deleteItem/${id}`)) as unknown as void;
-  }*/
+  }
 }
 
