@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BackendService, InventoryItem } from '../../../core/services/backend.service';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +7,8 @@ import { NotificationService } from '../../../core/services/notification.service
 import { ConfirmDialogComponent } from '../../../core/components/confirm-dialog/confirm-dialog.component';
 import { DialogService } from '../../../core/services/dialog-service.service';
 import { EditOrderDialogComponent } from '../edit-order-dialog/edit-order-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-inventory-table',
@@ -14,7 +16,8 @@ import { EditOrderDialogComponent } from '../edit-order-dialog/edit-order-dialog
   styleUrl: './inventory-table.component.scss',
   standalone: false,
 })
-export class InventoryTableComponent {
+export class InventoryTableComponent implements AfterViewInit, OnInit {
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private backendService: BackendService,
@@ -23,12 +26,16 @@ export class InventoryTableComponent {
     private readonly notificationService: NotificationService
   ) { }
 
-  data = [] as InventoryItem[];
+  dataSource = new MatTableDataSource<InventoryItem>([]);
 
   displayedColumns = ['name', 'shelf', 'qty', 'actions'];
 
   async ngOnInit(): Promise<void> {
-    this.data = await this.backendService.getProductData();
+    this.dataSource.data = await this.backendService.getProductData();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
   }
 
   async editShelf(row: InventoryItem): Promise<void> {
@@ -46,7 +53,7 @@ export class InventoryTableComponent {
         await this.backendService.updateShelf(row.id, newShelf);
         this.notificationService.showSuccess("Regal/Fach gespeichert");
         row.shelf = newShelf;
-        this.data = [...this.data];
+        this.dataSource.data = [...this.dataSource.data];
       }
       catch (e) {
         console.error(e);
@@ -72,7 +79,7 @@ export class InventoryTableComponent {
         await this.backendService.updateName(row.id, newName);
         this.notificationService.showSuccess("Produktname gespeichert");
         row.name = newName;
-        this.data = [...this.data];
+        this.dataSource.data = [...this.dataSource.data];
       }
       catch (e) {
         console.error(e);
@@ -98,7 +105,7 @@ export class InventoryTableComponent {
         await this.backendService.updateQty(row.id, result);
         this.notificationService.showSuccess('Bestand gespeichert');
         row.qty = result;
-        this.data = [...this.data];
+        this.dataSource.data = [...this.dataSource.data];
       } catch (e) {
         console.error(e);
         this.notificationService.showError('Fehler beim Speichern des Bestands');
@@ -113,10 +120,10 @@ export class InventoryTableComponent {
       try {
         await this.backendService.deleteProductData(row.id);
         this.notificationService.showSuccess('Produkt gelöscht');
-        const i = this.data.indexOf(row);
+        const i = this.dataSource.data.indexOf(row);
         if (i > -1) {
-          this.data.splice(i, 1);
-          this.data = [...this.data];
+          this.dataSource.data.splice(i, 1);
+          this.dataSource.data = [...this.dataSource.data];
         }
       }
       catch (e) {
@@ -145,7 +152,7 @@ export class InventoryTableComponent {
         row.name = result.name;
         row.shelf = result.shelf;
         row.qty = result.qty;
-        this.data = [...this.data];
+        this.dataSource.data = [...this.dataSource.data];
       }
       catch (e) {
         console.error(e);
@@ -153,6 +160,10 @@ export class InventoryTableComponent {
         return;
       }
     }
+  }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
