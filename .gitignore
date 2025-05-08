@@ -9,7 +9,7 @@ node_modules/
 .vscode/
 
 # build
-dist/
+# dist/
 
 # Zone.Identifier files (Windows metadata)
 *.Zone.Identifier
