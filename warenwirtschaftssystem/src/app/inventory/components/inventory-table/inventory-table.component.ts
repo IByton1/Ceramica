@@ -31,7 +31,16 @@ export class InventoryTableComponent implements AfterViewInit, OnInit {
   displayedColumns = ['name', 'shelf', 'qty', 'actions'];
 
   async ngOnInit(): Promise<void> {
-    this.dataSource.data = await this.backendService.getProductData();
+    try {
+      const items = await this.backendService.getProductData();
+      this.dataSource.data = items;
+    } catch (error) {
+      console.error('Fehler beim Laden der Daten:', error);
+      this.notificationService.showError(
+        'Die Daten konnten nicht geladen werden.'
+      );
+      this.dataSource.data = [];
+    }
   }
 
   ngAfterViewInit() {

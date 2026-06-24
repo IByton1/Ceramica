@@ -78,26 +78,26 @@ export class BackendService {
 
 
   */
-  private baseUrl = 'https://api.zeroleak.de/api2'; // URL des Backends
+  private baseUrl = '/api'; // URL des Backends
 
   constructor(private http: HttpClient) { }
 
   async getProductData(): Promise<InventoryItem[]> {
-    return await firstValueFrom(this.http.get(`${this.baseUrl}/api/getItems`)) as InventoryItem[];
+    return await firstValueFrom(this.http.get(`${this.baseUrl}/getItems`)) as InventoryItem[];
   }
 
   async addProductData(item: InventoryItem): Promise<InventoryItem> {
-    return await firstValueFrom(this.http.post(`${this.baseUrl}/api/addItem`, item)) as InventoryItem;
+    return await firstValueFrom(this.http.post(`${this.baseUrl}/addItem`, item)) as InventoryItem;
   }
 
   async updateProductData(item: InventoryItem): Promise<InventoryItem> {
-    return await firstValueFrom(this.http.put(`${this.baseUrl}/api/updateItem`, item)) as InventoryItem;
+    return await firstValueFrom(this.http.put(`${this.baseUrl}/updateItem`, item)) as InventoryItem;
   }
 
   async updateShelf(id: number, shelf: string): Promise<InventoryItem> {
     return firstValueFrom(
       this.http.patch<InventoryItem>(
-        `${this.baseUrl}/api/items/${id}/shelf`,
+        `${this.baseUrl}/items/${id}/shelf`,
         { shelf }
       )
     );
@@ -106,7 +106,7 @@ export class BackendService {
   async updateQty(id: number, qty: number): Promise<InventoryItem> {
     return firstValueFrom(
       this.http.patch<InventoryItem>(
-        `${this.baseUrl}/api/items/${id}/qty`,
+        `${this.baseUrl}/items/${id}/qty`,
         { qty }
       )
     );
@@ -115,14 +115,14 @@ export class BackendService {
   async updateName(id: number, name: string): Promise<InventoryItem> {
     return firstValueFrom(
       this.http.patch<InventoryItem>(
-        `${this.baseUrl}/api/items/${id}/name`,
+        `${this.baseUrl}/items/${id}/name`,
         { name }
       )
     );
   }
 
   async deleteProductData(id: number): Promise<void> {
-    return await firstValueFrom(this.http.delete(`${this.baseUrl}/api/deleteItem/${id}`)) as unknown as void;
+    return await firstValueFrom(this.http.delete(`${this.baseUrl}/deleteItem/${id}`)) as unknown as void;
   }
 }
 
